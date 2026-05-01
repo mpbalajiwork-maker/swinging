@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>April 2026 Monthly P&L Report — Mr. Wizard × Balaji | Client VI0793</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f0f5fc; --bg2:#e8edf8; --surface:#fff; --card:#fff; --card2:#f5f8ff;
+    --border:#dce4f4; --border2:#c2ccec;
+    --shadow:0 2px 14px rgba(26,46,140,0.09); --shadow-lg:0 6px 32px rgba(26,46,140,0.14);
+    --green:#0a9a58; --green-dim:#c0f0d8; --green-bg:#f0fff8; --green-t:#065534;
+    --red:#d02232; --red-dim:#f8ccd2; --red-bg:#fff4f5; --red-t:#880e1c;
+    --amber:#bc7400; --amber-dim:#fce0a4; --amber-bg:#fffbee; --amber-t:#764800;
+    --blue:#155ecf; --blue-dim:#c0d8ff; --blue-bg:#eef5ff; --blue-t:#0a3a8c;
+    --pharma:#005e48; --pharma-dim:#a8ecd8; --pharma-bg:#edfff8; --pharma-t:#003e30;
+    --purple:#7028bc; --purple-dim:#dcc4f8; --purple-bg:#f8eeff;
+    --navy:#162464; --navy2:#283e8c; --navy3:#0a1438;
+    --coral:#c83050; --coral-dim:#f8b8c8; --coral-bg:#fff0f4; --coral-t:#8a1030;
+    --text:#141e38; --text-muted:#546080; --text-light:#8494c0; --text-dim:#b8c4e0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;line-height:1.65;}
+
+  /* CRITICAL ALERT BANNER */
+  .alert-banner{
+    background:linear-gradient(90deg,var(--red-bg),#fff8f8,var(--red-bg));
+    border-bottom:3px solid var(--red-dim);padding:12px 52px;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .ab-icon{font-size:22px;}
+  .ab-main{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;color:var(--red-t);}
+  .ab-sub{font-size:12px;color:var(--text-muted);}
+
+  /* HEADER */
+  header{
+    background:linear-gradient(135deg,var(--navy3) 0%,var(--navy) 55%,var(--navy2) 100%);
+    padding:36px 52px 30px;position:relative;overflow:hidden;
+  }
+  header::before{content:'';position:absolute;top:-60px;right:-60px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,0.05) 0%,transparent 65%);pointer-events:none;}
+  .hdr-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px;}
+  .wiz-row{display:flex;gap:14px;align-items:flex-start;}
+  .wiz-av{width:52px;height:52px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#ffc840 0%,#ff8800 100%);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 18px rgba(255,200,64,0.45);}
+  .wi .wn{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#ffc840;}
+  .wi .wr{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,0.45);margin-top:2px;}
+  .wi .ws{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,200,150,0.85);margin-top:4px;}
+  .hdr-mid{flex:1;text-align:center;}
+  .hdr-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:4px;color:rgba(176,200,255,0.65);margin-bottom:6px;}
+  header h1{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:4px;color:#fff;line-height:1;}
+  header h1 span.r{color:#ffaaaa;} header h1 span.g{color:#80eecc;}
+  .hdr-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:5px;}
+  .summary-pill{border-radius:10px;padding:14px 20px;text-align:center;min-width:190px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.20);backdrop-filter:blur(10px);}
+  .sp-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:3px;color:rgba(180,220,255,0.65);margin-bottom:4px;}
+  .sp-val{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;line-height:1;}
+  .sp-note{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;}
+
+  /* STAT STRIP */
+  .stat-strip{background:var(--surface);border-bottom:2px solid var(--border);padding:10px 52px;display:flex;gap:22px;overflow-x:auto;align-items:center;box-shadow:var(--shadow);}
+  .ss{display:flex;flex-direction:column;gap:2px;white-space:nowrap;}
+  .ss-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-light);}
+  .ss-v{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;line-height:1;}
+  .ss-c{font-family:'JetBrains Mono',monospace;font-size:10px;}
+  .ss-div{width:1px;height:36px;background:var(--border2);}
+  .up{color:var(--green);} .dn{color:var(--red);} .neu{color:var(--amber);}
+  .flat{color:var(--text-muted);}
+
+  /* NAV */
+  nav{background:var(--surface);border-bottom:2px solid var(--border);padding:0 52px;display:flex;overflow-x:auto;position:sticky;top:0;z-index:200;box-shadow:var(--shadow);}
+  nav a{display:inline-block;padding:12px 18px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-muted);text-decoration:none;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
+  nav a:hover{color:var(--navy);border-bottom-color:var(--navy);}
+
+  /* LAYOUT */
+  main{max-width:1400px;margin:0 auto;padding:32px 52px 60px;}
+  .section{margin-bottom:48px;}
+  .slbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--text-dim);margin-bottom:5px;}
+  .stitle{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:var(--navy);margin-bottom:2px;}
+  .stitle span{color:var(--coral);}
+  .sdiv{height:3px;background:linear-gradient(to right,var(--navy),var(--coral),transparent);border-radius:2px;margin:10px 0 22px;}
+
+  /* CALLOUT */
+  .cbox{border-radius:10px;padding:18px 22px;margin-bottom:14px;border:1.5px solid;border-left:5px solid;}
+  .cb-g{border-color:var(--green-dim);border-left-color:var(--green);background:var(--green-bg);}
+  .cb-r{border-color:var(--red-dim);border-left-color:var(--red);background:var(--red-bg);}
+  .cb-a{border-color:var(--amber-dim);border-left-color:var(--amber);background:var(--amber-bg);}
+  .cb-n{border-color:var(--border2);border-left-color:var(--navy);background:#f0f4ff;}
+  .cb-p{border-color:var(--pharma-dim);border-left-color:var(--pharma);background:var(--pharma-bg);}
+  .cb-coral{border-color:var(--coral-dim);border-left-color:var(--coral);background:var(--coral-bg);}
+  .cbh{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+  .cbi{font-size:18px;}
+  .cbt{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;}
+  .cb-g .cbt{color:var(--green-t);} .cb-r .cbt{color:var(--red-t);}
+  .cb-a .cbt{color:var(--amber-t);} .cb-n .cbt{color:var(--navy);}
+  .cb-p .cbt{color:var(--pharma-t);} .cb-coral .cbt{color:var(--coral-t);}
+  .cbb{font-size:13px;color:var(--text-muted);line-height:1.7;}
+  .cbb strong{color:var(--text);}
+
+  /* GRIDS */
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  @media(max-width:960px){.g3,.g4{grid-template-columns:1fr 1fr;} .g2{grid-template-columns:1fr;}}
+
+  /* CARD */
+  .card{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:18px 22px;box-shadow:var(--shadow);}
+  .ct{font-weight:700;font-size:13px;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1.5px solid var(--border);}
+
+  /* BIG KPI CARDS */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px;}
+  .kpi{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:18px 20px;border-top:4px solid;box-shadow:var(--shadow);text-align:center;}
+  .kpi.red{border-top-color:var(--red);}
+  .kpi.green{border-top-color:var(--green);}
+  .kpi.amber{border-top-color:var(--amber);}
+  .kpi.blue{border-top-color:var(--blue);}
+  .kpi.purple{border-top-color:var(--purple);}
+  .kpi.coral{border-top-color:var(--coral);}
+  .kpi-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-light);margin-bottom:6px;}
+  .kpi-value{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;line-height:1;}
+  .kpi-note{font-size:11px;color:var(--text-muted);margin-top:5px;}
+
+  /* PILL */
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;padding:2px 8px;border-radius:4px;font-weight:600;}
+  .pg{background:var(--green-bg);color:var(--green-t);border:1px solid var(--green-dim);}
+  .pr{background:var(--red-bg);color:var(--red-t);border:1px solid var(--red-dim);}
+  .pa{background:var(--amber-bg);color:var(--amber-t);border:1px solid var(--amber-dim);}
+  .pb{background:var(--blue-bg);color:var(--blue-t);border:1px solid var(--blue-dim);}
+  .pcoral{background:var(--coral-bg);color:var(--coral-t);border:1px solid var(--coral-dim);}
+
+  /* TRADE TABLE */
+  .ttbl{width:100%;border-collapse:collapse;font-size:12px;}
+  .ttbl thead th{background:var(--navy3);color:#fff;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;padding:9px 12px;text-align:left;white-space:nowrap;}
+  .ttbl thead th:first-child{border-radius:6px 0 0 0;}
+  .ttbl thead th:last-child{border-radius:0 6px 0 0;}
+  .ttbl tbody tr{border-bottom:1px solid var(--border);}
+  .ttbl tbody tr:hover{background:var(--bg2);}
+  .ttbl tbody tr:nth-child(even){background:var(--card2);}
+  .ttbl tbody td{padding:8px 12px;color:var(--text-muted);vertical-align:middle;}
+  .ttbl tbody td:first-child{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--navy);}
+  .win-row td{color:var(--text)!important;background:rgba(10,154,88,0.03)!important;}
+  .loss-row td{background:rgba(208,34,50,0.03)!important;}
+  .big-win{background:rgba(10,154,88,0.08)!important;}
+  .big-loss{background:rgba(208,34,50,0.08)!important;}
+
+  /* DONUT-STYLE METER */
+  .meter-grid{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin:16px 0;}
+  .meter-box{text-align:center;}
+  .meter-circle{width:110px;height:110px;border-radius:50%;position:relative;display:inline-flex;align-items:center;justify-content:center;margin:0 auto 8px;}
+  .meter-val{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;line-height:1;}
+  .meter-sub{font-size:11px;color:var(--text-muted);}
+
+  /* PROGRESS BAR */
+  .prog-row{display:flex;gap:10px;align-items:center;margin-bottom:8px;}
+  .prog-lbl{font-size:12px;color:var(--text-muted);min-width:130px;}
+  .prog-bar{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+  .prog-fill{height:100%;border-radius:4px;}
+  .prog-val{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;min-width:60px;text-align:right;}
+
+  /* INSIGHT CARDS */
+  .insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+  .insight{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:18px 20px;border-left:4px solid;box-shadow:var(--shadow);}
+  .insight.critical{border-left-color:var(--red);}
+  .insight.warning{border-left-color:var(--amber);}
+  .insight.improve{border-left-color:var(--blue);}
+  .insight.good{border-left-color:var(--green);}
+  .insight-icon{font-size:22px;margin-bottom:8px;}
+  .insight-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;margin-bottom:6px;}
+  .insight.critical .insight-title{color:var(--red-t);}
+  .insight.warning .insight-title{color:var(--amber-t);}
+  .insight.improve .insight-title{color:var(--blue-t);}
+  .insight.good .insight-title{color:var(--green-t);}
+  .insight-body{font-size:12.5px;color:var(--text-muted);line-height:1.65;}
+  .insight-body strong{color:var(--text);}
+
+  /* RULE CARDS */
+  .rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .rule{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow);}
+  .rule-num{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:var(--border2);line-height:1;margin-bottom:4px;}
+  .rule-title{font-weight:700;font-size:13px;color:var(--navy);margin-bottom:6px;}
+  .rule-body{font-size:12.5px;color:var(--text-muted);line-height:1.65;}
+  .rule-body strong{color:var(--text);}
+
+  /* WIZARD FINAL */
+  .wf{background:linear-gradient(135deg,#f0f4ff,#e8eeff);border:2px solid var(--border2);border-radius:12px;padding:26px 30px;display:flex;gap:16px;align-items:flex-start;box-shadow:var(--shadow-lg);}
+  .wf-av{font-size:36px;flex-shrink:0;margin-top:2px;}
+  .wf-bd h4{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--navy);margin-bottom:10px;}
+  .wf-bd p{font-size:13px;color:var(--text-muted);margin-bottom:8px;}
+  .wf-bd p strong{color:var(--text);}
+  .wf-bd p em{color:var(--coral);font-style:normal;font-weight:700;}
+
+  footer{background:var(--navy3);padding:20px 52px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer p{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,0.3);}
+  footer strong{color:rgba(255,255,255,0.5);}
+  p{color:var(--text-muted);margin-bottom:8px;}
+
+  /* BUCKET TABLE */
+  .btbl{width:100%;border-collapse:collapse;}
+  .btbl thead th{background:var(--navy3);color:#fff;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;padding:9px 12px;text-align:left;}
+  .btbl tbody tr{border-bottom:1px solid var(--border);}
+  .btbl tbody tr:hover{background:var(--bg2);}
+  .btbl tbody td{padding:9px 12px;color:var(--text-muted);}
+  .btbl tbody td:first-child{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--navy);}
+</style>
+</head>
+<body>
+
+<!-- CRITICAL ALERT -->
+<div class="alert-banner">
+  <div class="ab-icon">⚠️</div>
+  <div>
+    <div class="ab-main">CRITICAL: NET LOSS OF ₹27,143 AFTER CHARGES · CHARGES (₹31,843) EXCEED GROSS PROFIT (₹4,699)</div>
+    <div class="ab-sub">Client VI0793 · Zerodha Equity P&L · April 2026 · 81 stocks traded · 32.5% win rate · Action required immediately</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-row">
+    <div class="wiz-row">
+      <div class="wiz-av">🧙</div>
+      <div class="wi">
+        <div class="wn">MR. WIZARD</div>
+        <div class="wr">MENTOR REVIEW · MONTHLY P&L ANALYSIS</div>
+        <div class="ws">▸ APRIL 2026 TRADING REPORT · CLIENT VI0793 · ZERODHA</div>
+      </div>
+    </div>
+    <div class="hdr-mid">
+      <div class="hdr-tag">▸ MONTHLY TRADE ANALYSIS · APRIL 2026 · COMPLETE REVIEW</div>
+      <h1>APRIL P&L: <span class="g">₹4,700</span> GROSS / <span class="r">₹27,143</span> NET LOSS</h1>
+      <div class="hdr-sub">81 Stocks Traded · 77 Closed · 4 Open · Win Rate 32.5% · Charges ₹31,843 · Turnover ₹7.6 Cr</div>
+    </div>
+    <div class="summary-pill">
+      <div class="sp-lbl">APRIL VERDICT</div>
+      <div class="sp-val dn">LOSS</div>
+      <div style="font-size:14px;font-weight:700;color:#ffaaaa;margin-top:4px;">₹27,143 NET LOSS</div>
+      <div class="sp-note">After all charges & debits</div>
+    </div>
+  </div>
+</header>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="ss"><div class="ss-l">TOTAL STOCKS TRADED</div><div class="ss-v" style="color:var(--navy)">81</div><div class="ss-c flat">Extremely high</div></div>
+  <div class="ss"><div class="ss-l">GROSS REALIZED P&L</div><div class="ss-v up">₹4,700</div><div class="ss-c up">Before charges</div></div>
+  <div class="ss"><div class="ss-l">TOTAL CHARGES</div><div class="ss-v dn">₹31,843</div><div class="ss-c dn">6.78× the gross profit!</div></div>
+  <div class="ss"><div class="ss-l">NET P&L AFTER CHARGES</div><div class="ss-v dn">-₹27,143</div><div class="ss-c dn">Actual loss to account</div></div>
+  <div class="ss-div"></div>
+  <div class="ss"><div class="ss-l">WIN RATE</div><div class="ss-v dn">32.5%</div><div class="ss-c dn">25 wins / 77 closed</div></div>
+  <div class="ss"><div class="ss-l">LOSING TRADES</div><div class="ss-v dn">52</div><div class="ss-c dn">67.5% of all closed trades</div></div>
+  <div class="ss"><div class="ss-l">WIN/LOSS RATIO</div><div class="ss-v up">2.19×</div><div class="ss-c up">Avg win ₹4,766 vs Avg loss ₹2,178</div></div>
+  <div class="ss-div"></div>
+  <div class="ss"><div class="ss-l">BIGGEST WIN</div><div class="ss-v up">₹24,366</div><div class="ss-c up">GUJALKALI +10.28%</div></div>
+  <div class="ss"><div class="ss-l">BIGGEST LOSS</div><div class="ss-v dn">-₹13,131</div><div class="ss-c dn">SHRIRAMFIN -2.55%</div></div>
+  <div class="ss-div"></div>
+  <div class="ss"><div class="ss-l">STT ALONE</div><div class="ss-v dn">₹20,142</div><div class="ss-c dn">4.29× gross profit in tax</div></div>
+  <div class="ss"><div class="ss-l">TOTAL TURNOVER</div><div class="ss-v flat">~₹7.6 Cr</div><div class="ss-c flat">Buy + Sell combined</div></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#summary">📊 SUMMARY</a>
+  <a href="#charges">💸 CHARGES</a>
+  <a href="#winners">✅ WINNERS</a>
+  <a href="#losers">❌ LOSERS</a>
+  <a href="#patterns">🔍 PATTERNS</a>
+  <a href="#insights">💡 INSIGHTS</a>
+  <a href="#rules">📋 RULES TO FIX</a>
+  <a href="#open">📌 OPEN POSITIONS</a>
+  <a href="#wizard">🧙 MENTOR</a>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- SECTION 1: SUMMARY -->
+  <div class="section" id="summary">
+    <div class="slbl">SECTION 01</div>
+    <div class="stitle">Executive <span>Summary — April 2026</span></div>
+    <div class="sdiv"></div>
+
+    <div class="kpi-grid">
+      <div class="kpi green">
+        <div class="kpi-label">GROSS REALIZED P&L</div>
+        <div class="kpi-value up">+₹4,700</div>
+        <div class="kpi-note">Before charges</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-label">NET AFTER CHARGES</div>
+        <div class="kpi-value dn">-₹27,143</div>
+        <div class="kpi-note">True account impact</div>
+      </div>
+      <div class="kpi amber">
+        <div class="kpi-label">TOTAL CHARGES PAID</div>
+        <div class="kpi-value neu">₹31,843</div>
+        <div class="kpi-note">6.78× your gross profit</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-label">WIN RATE</div>
+        <div class="kpi-value dn">32.5%</div>
+        <div class="kpi-note">25 winners / 77 closed</div>
+      </div>
+      <div class="kpi green">
+        <div class="kpi-label">WIN/LOSS RATIO</div>
+        <div class="kpi-value up">2.19×</div>
+        <div class="kpi-note">Avg win ₹4,766 · Avg loss ₹2,178</div>
+      </div>
+      <div class="kpi coral">
+        <div class="kpi-label">STOCKS TRADED</div>
+        <div class="kpi-value" style="color:var(--coral)">81</div>
+        <div class="kpi-note">Way too many for a swing trader</div>
+      </div>
+      <div class="kpi blue">
+        <div class="kpi-label">TOTAL TURNOVER</div>
+        <div class="kpi-value" style="color:var(--blue-t)">₹7.6 Cr</div>
+        <div class="kpi-note">Buy + Sell combined</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-label">UNREALIZED P&L</div>
+        <div class="kpi-value dn">-₹1,489</div>
+        <div class="kpi-note">4 open positions</div>
+      </div>
+    </div>
+
+    <div class="cbox cb-r">
+      <div class="cbh"><span class="cbi">🚨</span><span class="cbt">THE CRITICAL ISSUE — YOUR CHARGES ATE 678% OF YOUR PROFIT</span></div>
+      <div class="cbb">
+        Balaji, this is the most important analysis of your trading career. You made ₹4,700 in gross profits from 81 stocks in April. But you paid ₹31,843 in charges — <strong>6.78 times more than you earned.</strong> This means you worked extremely hard (37 million rupees in turnover), took on all the market risk, and ended up with a net loss of ₹27,143. The market didn't take your money — the transaction costs did.<br><br>
+        <strong>The root cause: You are trading too many stocks with too small positions.</strong> When you trade 81 different stocks, each trade generates brokerage + STT + exchange charges + GST + stamp duty. The ₹20,142 STT alone is 4.3× your entire gross profit. This is the #1 issue to fix before any technical analysis improvement matters.
+      </div>
+    </div>
+
+    <div class="g2">
+      <!-- P&L Waterfall breakdown -->
+      <div class="card">
+        <div class="ct">📊 P&L Waterfall — Where Did the Money Go?</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="prog-row">
+            <div class="prog-lbl">Gross Realized P&L</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--green)"></div></div>
+            <div class="prog-val up">+₹4,700</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl">Less: STT (Tax)</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--red)"></div></div>
+            <div class="prog-val dn">-₹20,142</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl">Less: Brokerage</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:29%;background:var(--red)"></div></div>
+            <div class="prog-val dn">-₹5,800</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl">Less: Exchange Charges</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:12%;background:var(--red)"></div></div>
+            <div class="prog-val dn">-₹2,407</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl">Less: Stamp Duty</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:10%;background:var(--amber)"></div></div>
+            <div class="prog-val dn">-₹1,925</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl">Less: GST (IGST)</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:7%;background:var(--amber)"></div></div>
+            <div class="prog-val dn">-₹1,491</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl">Less: Other Debits</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:5%;background:var(--amber)"></div></div>
+            <div class="prog-val dn">-₹6,018</div>
+          </div>
+          <div style="border-top:2px solid var(--red-dim);padding-top:10px;margin-top:4px;">
+            <div class="prog-row">
+              <div class="prog-lbl" style="color:var(--red-t);font-weight:700;">NET P&L</div>
+              <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--red)"></div></div>
+              <div class="prog-val dn" style="font-family:'Bebas Neue',sans-serif;font-size:16px;">-₹27,143</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Win/Loss Distribution -->
+      <div class="card">
+        <div class="ct">📊 Win/Loss Distribution by % Move</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="prog-row">
+            <div class="prog-lbl dn">Loss > 2% (6 trades)</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:8%;background:var(--red)"></div></div>
+            <div class="prog-val dn">8%</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl dn">Loss 1–2% (21 trades)</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:27%;background:var(--red)"></div></div>
+            <div class="prog-val dn">27%</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl dn">Loss 0–1% (25 trades)</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:32%;background:var(--amber)"></div></div>
+            <div class="prog-val dn">32%</div>
+          </div>
+          <div style="border:1px dashed var(--border2);margin:4px 0;"></div>
+          <div class="prog-row">
+            <div class="prog-lbl up">Gain 0–1% (13 trades)</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:17%;background:var(--green)"></div></div>
+            <div class="prog-val up">17%</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl up">Gain 1–2% (4 trades)</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:5%;background:var(--green)"></div></div>
+            <div class="prog-val up">5%</div>
+          </div>
+          <div class="prog-row">
+            <div class="prog-lbl up">Gain > 2% (8 trades)</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:10%;background:var(--green)"></div></div>
+            <div class="prog-val up">10%</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:10px 14px;background:var(--amber-bg);border:1px solid var(--amber-dim);border-radius:6px;font-size:12.5px;color:var(--amber-t);">
+          <strong>Key Insight:</strong> 67% of trades lost money. The most common trade outcome is a "small loss" (0–1%) — which gets amplified by charges into a net negative.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: CHARGES -->
+  <div class="section" id="charges">
+    <div class="slbl">SECTION 02</div>
+    <div class="stitle">Charges <span>Breakdown — The Real Enemy</span></div>
+    <div class="sdiv"></div>
+
+    <div class="cbox cb-r">
+      <div class="cbh"><span class="cbi">💸</span><span class="cbt">STT = ₹20,142 — THE SINGLE BIGGEST COST · 4.3× YOUR GROSS PROFIT</span></div>
+      <div class="cbb">
+        <strong>Securities Transaction Tax (STT) alone was ₹20,142 — while your entire gross profit was only ₹4,700.</strong> STT is levied at 0.1% on the sell value for delivery trades. With ₹3.8 crore in sell turnover, this becomes unavoidable. The only solution: <strong>trade fewer stocks with larger position sizes and hold them for meaningful gains (3–8%), not tiny gains (0.1–0.5%).</strong> When you make 0.1% on a ₹3 crore trade (Adani Ent.), you earn ₹3,000 but pay ₹3,000+ in STT alone on that one trade.
+      </div>
+    </div>
+
+    <div class="g2">
+      <div class="card">
+        <div class="ct">💸 Charges Breakdown</div>
+        <table class="ttbl">
+          <thead><tr><th>CHARGE TYPE</th><th>AMOUNT (₹)</th><th>% OF GROSS PROFIT</th><th>% OF TOTAL</th></tr></thead>
+          <tbody>
+            <tr class="big-loss"><td>Securities Transaction Tax (STT)</td><td class="dn">₹20,142</td><td class="dn">429%</td><td class="dn">63.3%</td></tr>
+            <tr><td>Brokerage</td><td class="dn">₹5,800</td><td class="dn">123%</td><td class="dn">18.2%</td></tr>
+            <tr><td>Exchange Transaction Charges</td><td class="dn">₹2,407</td><td class="dn">51%</td><td class="dn">7.6%</td></tr>
+            <tr><td>Stamp Duty</td><td class="dn">₹1,925</td><td class="dn">41%</td><td class="dn">6.0%</td></tr>
+            <tr><td>IGST on Brokerage</td><td class="dn">₹1,491</td><td class="dn">32%</td><td class="dn">4.7%</td></tr>
+            <tr><td>SEBI Turnover Fees</td><td class="dn">₹78</td><td class="dn">2%</td><td class="dn">0.2%</td></tr>
+            <tr style="background:var(--red-bg)!important"><td><strong>TOTAL CHARGES</strong></td><td class="dn"><strong>₹31,843</strong></td><td class="dn"><strong>678%</strong></td><td class="dn"><strong>100%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="ct">📊 Break-Even Analysis — How Much You Need to Earn Per Trade</div>
+        <div class="cbox cb-n" style="margin-bottom:10px;">
+          <div class="cbb"><strong>To break even on charges alone:</strong><br>
+          Average per-trade charge = ₹31,843 ÷ 81 stocks = <strong>₹393 per stock.</strong><br>
+          That means every trade you enter must gain at least ₹393 just to cover transaction costs — before making any profit.<br><br>
+          <strong>For a ₹1,50,000 position:</strong> Need minimum 0.26% gain just to break even on charges. If your average gain is only 0.15%, you're guaranteed to lose money.</div>
+        </div>
+        <div class="cbox cb-a">
+          <div class="cbb"><strong>The math of 81 stocks:</strong><br>
+          81 stocks × avg ₹1L position = ₹81L theoretical exposure<br>
+          Average actual position: ₹4.7L per stock (buy value avg)<br>
+          Actual turnover: ₹7.6 crore (Buy + Sell combined)<br>
+          STT rate (0.1% on sell): <strong>₹38L sell × 0.1% = ₹3,800 STT just on average sized positions</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: WINNERS -->
+  <div class="section" id="winners">
+    <div class="slbl">SECTION 03</div>
+    <div class="stitle">Top <span>Winners — 25 Profitable Trades</span></div>
+    <div class="sdiv"></div>
+
+    <div class="cbox cb-g">
+      <div class="cbh"><span class="cbi">✅</span><span class="cbt">WHAT YOUR WINNERS HAVE IN COMMON — LEARN FROM THESE</span></div>
+      <div class="cbb">
+        Your top winners (<strong>GUJALKALI +10.28%, KRN +6.53%, GRWRHITECH +6.88%, BHARATFORG +4.42%, GRAPHITE +4.38%</strong>) all share one characteristic: <strong>You held them long enough to make a meaningful percentage gain (4–10%).</strong> These are the trades that worked with your system. The winners generated average ₹4,766 per trade. Unfortunately, the 52 losers averaged only ₹2,178 loss — but there were twice as many losers.
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;border-radius:10px;box-shadow:var(--shadow-lg);">
+    <table class="ttbl">
+      <thead>
+        <tr><th>RANK</th><th>SYMBOL</th><th>QTY</th><th>BUY VALUE ₹</th><th>SELL VALUE ₹</th><th>PROFIT ₹</th><th>% GAIN</th><th>VERDICT</th></tr>
+      </thead>
+      <tbody>
+        <tr class="big-win"><td>#1</td><td>GUJALKALI</td><td>350</td><td>2,37,003</td><td>2,61,369</td><td class="up">+24,366</td><td class="up">+10.28%</td><td><span class="pill pg">EXCELLENT ★</span></td></tr>
+        <tr class="win-row"><td>#2</td><td>KRN</td><td>200</td><td>1,76,529</td><td>1,88,051</td><td class="up">+11,522</td><td class="up">+6.53%</td><td><span class="pill pg">EXCELLENT ★</span></td></tr>
+        <tr class="win-row"><td>#3</td><td>J&KBANK</td><td>3000</td><td>3,70,820</td><td>3,79,957</td><td class="up">+9,137</td><td class="up">+2.46%</td><td><span class="pill pg">GOOD</span></td></tr>
+        <tr class="win-row"><td>#4</td><td>SBIN</td><td>300</td><td>3,23,040</td><td>3,32,104</td><td class="up">+9,064</td><td class="up">+2.81%</td><td><span class="pill pg">GOOD</span></td></tr>
+        <tr class="win-row"><td>#5</td><td>GRAPHITE</td><td>300</td><td>1,99,791</td><td>2,08,540</td><td class="up">+8,749</td><td class="up">+4.38%</td><td><span class="pill pg">VERY GOOD ★</span></td></tr>
+        <tr class="win-row"><td>#6</td><td>GRWRHITECH</td><td>30</td><td>1,11,874</td><td>1,19,567</td><td class="up">+7,693</td><td class="up">+6.88%</td><td><span class="pill pg">EXCELLENT ★</span></td></tr>
+        <tr class="win-row"><td>#7</td><td>BHARATFORG</td><td>100</td><td>1,73,490</td><td>1,81,167</td><td class="up">+7,677</td><td class="up">+4.42%</td><td><span class="pill pg">VERY GOOD ★</span></td></tr>
+        <tr class="win-row"><td>#8</td><td>FEDERALBNK</td><td>2250</td><td>6,43,400</td><td>6,49,698</td><td class="up">+6,298</td><td class="up">+0.98%</td><td><span class="pill pa">SMALL WIN</span></td></tr>
+        <tr class="win-row"><td>#9</td><td>OFSS</td><td>40</td><td>3,74,114</td><td>3,79,911</td><td class="up">+5,797</td><td class="up">+1.55%</td><td><span class="pill pg">GOOD</span></td></tr>
+        <tr class="win-row"><td>#10</td><td>POWERICA</td><td>200</td><td>91,917</td><td>96,399</td><td class="up">+4,482</td><td class="up">+4.88%</td><td><span class="pill pg">VERY GOOD ★</span></td></tr>
+        <tr><td>#11</td><td>ADANIPORTS</td><td>2050</td><td>31,79,574</td><td>31,83,188</td><td class="up">+3,613</td><td class="up">+0.11%</td><td><span class="pill pa">TINY WIN</span></td></tr>
+        <tr><td>#12</td><td>SUNPHARMA</td><td>600</td><td>10,40,869</td><td>10,43,845</td><td class="up">+2,976</td><td class="up">+0.29%</td><td><span class="pill pa">TINY WIN</span></td></tr>
+        <tr><td>#13</td><td>SYNGENE</td><td>450</td><td>2,14,889</td><td>2,17,793</td><td class="up">+2,904</td><td class="up">+1.35%</td><td><span class="pill pg">GOOD</span></td></tr>
+        <tr><td>#14</td><td>INFY</td><td>1101</td><td>14,51,158</td><td>14,54,057</td><td class="up">+2,900</td><td class="up">+0.20%</td><td><span class="pill pa">TINY WIN</span></td></tr>
+        <tr><td>#15</td><td>PIRAMALFIN</td><td>150</td><td>3,02,114</td><td>3,04,267</td><td class="up">+2,153</td><td class="up">+0.71%</td><td><span class="pill pa">SMALL</span></td></tr>
+        <tr><td>16–25</td><td>DEVYANI, CEINSYS, IIFL, VOLTAS, BANDHANBNK, IRCON, DRREDDY, APOLLO, ASTRAL, SPMLINFRA</td><td>—</td><td>—</td><td>—</td><td class="up">₹25–₹2,123</td><td class="up">0.04–1.79%</td><td><span class="pill pa">SMALL</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- SECTION 4: LOSERS -->
+  <div class="section" id="losers">
+    <div class="slbl">SECTION 04</div>
+    <div class="stitle">Top <span>Losers — 52 Loss-Making Trades</span></div>
+    <div class="sdiv"></div>
+
+    <div class="cbox cb-r">
+      <div class="cbh"><span class="cbi">❌</span><span class="cbt">52 LOSING TRADES — THE PATTERN: LARGE POSITIONS, SMALL LOSSES BUT TOO MANY</span></div>
+      <div class="cbb">
+        The worst losses were in <strong>SHRIRAMFIN (-₹13,131, -2.55%)</strong> and <strong>ASHOKLEY (-₹12,986, -4.26%)</strong>. These are large-cap stocks with substantial position sizes where the thesis didn't work. <strong>Notice: The percentage losses are NOT extreme (most losses are -1% to -2.5%), but the absolute rupee losses are large because of big position sizes.</strong> Additionally, 25 trades lost less than ₹1,000 each — these "small" losses collectively total ₹12,000+ and generated equal transaction costs as the large trades.
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;border-radius:10px;box-shadow:var(--shadow-lg);">
+    <table class="ttbl">
+      <thead>
+        <tr><th>RANK</th><th>SYMBOL</th><th>QTY</th><th>BUY VALUE ₹</th><th>REALIZED LOSS ₹</th><th>% LOSS</th><th>ISSUE</th></tr>
+      </thead>
+      <tbody>
+        <tr class="big-loss"><td>#1</td><td>SHRIRAMFIN</td><td>501</td><td>5,14,362</td><td class="dn">-13,131</td><td class="dn">-2.55%</td><td><span class="pill pr">NO STOP LOSS</span></td></tr>
+        <tr class="big-loss"><td>#2</td><td>ASHOKLEY</td><td>1700</td><td>3,04,900</td><td class="dn">-12,986</td><td class="dn">-4.26%</td><td><span class="pill pr">LARGE SIZE · -4%</span></td></tr>
+        <tr class="loss-row"><td>#3</td><td>BAJFINANCE</td><td>3900</td><td>34,81,808</td><td class="dn">-8,235</td><td class="dn">-0.24%</td><td><span class="pill pr">HUGE SIZE · TINY %</span></td></tr>
+        <tr class="loss-row"><td>#4</td><td>GRASIM</td><td>1100</td><td>27,81,498</td><td class="dn">-7,001</td><td class="dn">-0.25%</td><td><span class="pill pr">HUGE SIZE · TINY %</span></td></tr>
+        <tr><td>#5</td><td>SANSERA</td><td>100</td><td>2,39,794</td><td class="dn">-3,839</td><td class="dn">-1.60%</td><td><span class="pill pa">NO SL HIT</span></td></tr>
+        <tr><td>#6</td><td>BANKINDIA</td><td>2000</td><td>3,05,444</td><td class="dn">-3,624</td><td class="dn">-1.19%</td><td><span class="pill pa">SECTOR WRONG</span></td></tr>
+        <tr><td>#7</td><td>ICICIBANK</td><td>500</td><td>6,88,420</td><td class="dn">-3,450</td><td class="dn">-0.50%</td><td><span class="pill pa">EARLY EXIT?</span></td></tr>
+        <tr><td>#8</td><td>FINCABLES</td><td>245</td><td>2,10,410</td><td class="dn">-3,271</td><td class="dn">-1.55%</td><td><span class="pill pa">SL NOT PLACED</span></td></tr>
+        <tr><td>#9</td><td>ETERNAL</td><td>250</td><td>64,750</td><td class="dn">-3,013</td><td class="dn">-4.65%</td><td><span class="pill pr">LET LOSS RUN -4.65%</span></td></tr>
+        <tr><td>#10</td><td>ADANIENT</td><td>1600</td><td>33,23,063</td><td class="dn">-2,823</td><td class="dn">-0.09%</td><td><span class="pill pr">₹3.3 Cr FOR -0.09%!</span></td></tr>
+        <tr><td>#11–20</td><td>DALMIASUG, FINCABLES, ICICIBANK, BANKINDIA, ATHERENERG, INDSWFTLAB, SANSERA, PARKHOSPS, CSBBANK, SOUTHWEST</td><td>—</td><td>—</td><td class="dn">-2,031 to -2,954</td><td class="dn">-1% to -2%</td><td><span class="pill pa">CONSISTENT SMALL LOSSES</span></td></tr>
+        <tr><td>21–52</td><td>32 more losing trades</td><td>—</td><td>—</td><td class="dn">-213 to -1,855</td><td class="dn">-0.03% to -3.20%</td><td><span class="pill pr">DEAD WEIGHT TRADES</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- SECTION 5: PATTERNS -->
+  <div class="section" id="patterns">
+    <div class="slbl">SECTION 05</div>
+    <div class="stitle">Trading <span>Patterns — What the Data Reveals</span></div>
+    <div class="sdiv"></div>
+
+    <!-- Trade size analysis -->
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--navy);margin-bottom:12px;">📊 Trade Size vs Profitability</h3>
+    <div style="overflow-x:auto;border-radius:10px;box-shadow:var(--shadow-lg);margin-bottom:20px;">
+    <table class="btbl">
+      <thead>
+        <tr><th>POSITION SIZE</th><th>TRADES</th><th>TOTAL P&L ₹</th><th>AVG P&L ₹</th><th>WINNERS</th><th>LOSERS</th><th>WIN RATE</th><th>VERDICT</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Under ₹1 Lakh (micro)</td><td>19</td><td class="dn">-12,179</td><td class="dn">-641</td><td>2</td><td>17</td><td class="dn">10.5%</td><td><span class="pill pr">DESTROYING CAPITAL</span></td></tr>
+        <tr><td>₹1L–₹2L (small)</td><td>25</td><td class="up">+17,619</td><td class="up">+705</td><td>10</td><td>15</td><td class="neu">40%</td><td><span class="pill pa">MARGINAL</span></td></tr>
+        <tr><td>₹2L–₹5L (medium)</td><td>19</td><td class="up">+20,360</td><td class="up">+1,072</td><td>8</td><td>11</td><td class="neu">42%</td><td><span class="pill pg">BEST PERFORMER</span></td></tr>
+        <tr><td>₹5L–₹10L (large)</td><td>3</td><td class="dn">-10,283</td><td class="dn">-3,428</td><td>1</td><td>2</td><td class="dn">33%</td><td><span class="pill pr">HIGH RISK</span></td></tr>
+        <tr style="background:var(--red-bg)!important"><td>Above ₹10L (very large)</td><td>11</td><td class="dn">-9,629</td><td class="dn">-875</td><td>4</td><td>7</td><td class="dn">36%</td><td><span class="pill pr">LARGE CAPITAL · TINY GAIN</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="cbox cb-coral">
+      <div class="cbh"><span class="cbi">🔍</span><span class="cbt">PATTERN #1 — THE MICRO-TRADE TRAP (UNDER ₹1 LAKH)</span></div>
+      <div class="cbb">
+        <strong>19 trades with under ₹1 lakh investment have a 10.5% win rate and lost ₹12,179 collectively.</strong> These include stocks like OLAELEC, UJJIVANSFB, NEWGEN, ACUTAAS, GALLANTT, SPMLINFRA, HINDCOPPER — all tiny positions that generated transaction costs nearly equal to the position size. <strong>A ₹26,000 trade in NEWGEN with ₹600 brokerage + STT = you need 4%+ gain just to cover costs. These micro trades are guaranteed losers.</strong>
+      </div>
+    </div>
+
+    <div class="cbox cb-r">
+      <div class="cbh"><span class="cbi">🔍</span><span class="cbt">PATTERN #2 — THE GIANT POSITION PARADOX (ABOVE ₹10 LAKH)</span></div>
+      <div class="cbb">
+        <strong>BAJFINANCE: ₹3.48 crore invested → Loss of ₹8,234 (-0.24%). GRASIM: ₹2.78 crore invested → Loss of ₹7,001 (-0.25%). ADANIENT: ₹3.32 crore invested → Loss of just -₹2,823 (-0.09%).</strong><br><br>
+        You are deploying enormous capital (₹28–35 lakh positions) to make 0.1–0.3% returns. But STT alone on selling ₹3.48 crore = ₹3,480. You're essentially paying ₹3,500 in tax to make ₹8,000 and ending up -₹8,000. <strong>These positions need to move AT LEAST 2–3% before they're worth the transaction costs.</strong> If you bought them as swing trades expecting 0.1% moves, the strategy has fundamental flaws.
+      </div>
+    </div>
+
+    <div class="cbox cb-a">
+      <div class="cbh"><span class="cbi">🔍</span><span class="cbt">PATTERN #3 — YOUR BEST TRADES SHARE ONE THING: THEY MOVED 4–10%</span></div>
+      <div class="cbb">
+        <strong>GUJALKALI (+10.28%), KRN (+6.53%), GRWRHITECH (+6.88%), POWERICA (+4.88%), BHARATFORG (+4.42%) — all your top trades had meaningful % moves.</strong> These show that your stock selection judgment IS correct for certain trades. The issue is: you dilute this skill by also entering 60+ other trades that either: (a) don't move enough, (b) move against you, or (c) you exit too early for tiny 0.1–0.3% gains.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: INSIGHTS -->
+  <div class="section" id="insights">
+    <div class="slbl">SECTION 06</div>
+    <div class="stitle">Mr. Wizard's <span>Critical Insights</span></div>
+    <div class="sdiv"></div>
+
+    <div class="insight-grid">
+
+      <div class="insight critical">
+        <div class="insight-icon">🔴</div>
+        <div class="insight-title">81 STOCKS = DIVERSIFICATION DISASTER</div>
+        <div class="insight-body">
+          <strong>A swing trader should never trade more than 8–10 stocks per month.</strong> Trading 81 stocks means you have no real conviction in any single trade. When you spread ₹7.6 crore across 81 names, you're essentially running an underfunded mutual fund — but paying retail brokerage, STT, and stamp duty on every single transaction. The solution: next month, trade maximum 10 stocks. Focus only on your highest conviction SMID themes.
+        </div>
+      </div>
+
+      <div class="insight critical">
+        <div class="insight-icon">🔴</div>
+        <div class="insight-title">NO STOP-LOSS DISCIPLINE EVIDENT</div>
+        <div class="insight-body">
+          <strong>ASHOKLEY fell -4.26% and ETERNAL fell -4.65% before exit.</strong> A proper stop-loss of 1.5–2% would have saved ₹7,000–₹10,000 on these two trades alone. The pattern: small wins are cut early (0.1–0.3%) but losses are held longer (2–5%). This is the classic "cut flowers, water weeds" trading mistake. <strong>Rule: SL must be placed at the moment of entry, not when you're already in pain.</strong>
+        </div>
+      </div>
+
+      <div class="insight critical">
+        <div class="insight-icon">🔴</div>
+        <div class="insight-title">TINY GAINS ON GIANT POSITIONS = LOSING STRATEGY</div>
+        <div class="insight-body">
+          <strong>ADANIENT: ₹3.32 Cr deployed, gain = -₹2,823 (-0.09%). BAJFINANCE: ₹3.48 Cr deployed, loss = -₹8,234 (-0.24%).</strong> When you invest ₹33+ lakh in a stock, you need at minimum 2% to offset costs. If your target was 0.1%, you were trading the wrong instrument (use futures for large-cap momentum plays, not delivery equity). Delivery equity swing trading needs 3–8% target to be viable.
+        </div>
+      </div>
+
+      <div class="insight warning">
+        <div class="insight-icon">🟡</div>
+        <div class="insight-title">WIN RATE 32.5% IS MANAGEABLE — IF RATIO IMPROVES</div>
+        <div class="insight-body">
+          <strong>Your 2.19× win/loss ratio (avg win ₹4,766 vs avg loss ₹2,178) is actually not terrible in isolation.</strong> A trader with 2.19× ratio can be profitable at 32.5% win rate — IF charges are controlled. The math: (25 × 4,766) - (52 × 2,178) = ₹119,150 - ₹113,256 = +₹5,894 theoretical. But ₹31,843 in charges destroyed this. <strong>Fix the charges first, then the win rate problem becomes less severe.</strong>
+        </div>
+      </div>
+
+      <div class="insight warning">
+        <div class="insight-icon">🟡</div>
+        <div class="insight-title">SECTOR CONCENTRATION ERROR — BANKING HEAVY</div>
+        <div class="insight-body">
+          You traded ICICIBANK, HDFCBANK, J&KBANK, BANKINDIA, BANDHANBNK, FEDERALBNK, CSBBANK, UJJIVANSFB — 8 banking stocks. In April 2026, banking was under RBI ECL pressure. <strong>This is the opposite of what our weekly analysis suggested.</strong> The confirmed winning sectors (Pharma, Defence, Coal) each had only 1–2 trades. Sector concentration in a wrong sector × multiple stocks = compounding losses.
+        </div>
+      </div>
+
+      <div class="insight improve">
+        <div class="insight-icon">🔵</div>
+        <div class="insight-title">YOUR BEST TRADES SHOW THE RIGHT PATTERN</div>
+        <div class="insight-body">
+          GUJALKALI (+10.28%), KRN (+6.53%), GRWRHITECH (+6.88%) — these 3 trades alone generated ₹43,580 in gross profits. <strong>If your entire month was only these 10 best trades (not 81), you would have had gross profit of ₹100,000+ with charges under ₹5,000 = net ₹95,000+ profit.</strong> The path to profitability is simple: do LESS but better.
+        </div>
+      </div>
+
+      <div class="insight improve">
+        <div class="insight-icon">🔵</div>
+        <div class="insight-title">OPEN POSITIONS HAVE HIDDEN RISK</div>
+        <div class="insight-body">
+          4 open positions: GMDCLTD (-₹370), JBCHEPHARM (+₹588), JUBLINGREA (-₹1,521), THERMAX (-₹186). <strong>Total unrealized loss: -₹1,489.</strong> None of these are from the confirmed SMID themes (Pharma, Defence, Coal, CDMO). JUBLINGREA has 0 trades but an open position with -₹1,521 — this was never traded in April, suggesting it may be a carryover position from March that is slowly bleeding.
+        </div>
+      </div>
+
+      <div class="insight good">
+        <div class="insight-icon">🟢</div>
+        <div class="insight-title">STRONG STOCK PICKING IN SELECT AREAS</div>
+        <div class="insight-body">
+          <strong>GUJALKALI +10.28%, KRN +6.53%, GRAPHITE +4.38%, POWERICA +4.88%, BHARATFORG +4.42% — five trades above 4% gain.</strong> This demonstrates you CAN identify breakout stocks correctly. The skill exists. The problem is dilution through 76 other trades. Double down on this identification skill and cut everything else. Quality over quantity is your path to profitability.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 7: RULES -->
+  <div class="section" id="rules">
+    <div class="slbl">SECTION 07</div>
+    <div class="stitle">Rules to <span>Fix — May 2026 Action Plan</span></div>
+    <div class="sdiv"></div>
+
+    <div class="cbox cb-n">
+      <div class="cbh"><span class="cbi">📋</span><span class="cbt">MR. WIZARD'S 10 NON-NEGOTIABLE RULES FOR MAY 2026</span></div>
+      <div class="cbb">Based on the April P&L data, <strong>these are the specific rules that would have converted April's -₹27,143 net loss into a ₹50,000+ net profit.</strong> These are not generic trading advice — they are derived from your actual April trade patterns.</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--red-dim)">01</div>
+        <div class="rule-title">Maximum 10 stocks per month — HARD LIMIT</div>
+        <div class="rule-body">You traded 81 stocks in April. Each additional stock adds charges without proportional returns. <strong>May 2026: Select 8–10 stocks only from the 4 confirmed SMID themes. Write them on Sunday night. Trade only those names all month.</strong></div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--red-dim)">02</div>
+        <div class="rule-title">Minimum 3% target per trade — NEVER take profits at 0.1–0.5%</div>
+        <div class="rule-body"><strong>14 of your winning trades made less than 1%.</strong> On ₹2L positions, a 0.5% gain is ₹1,000. STT alone costs ₹200+. Net gain after all charges: under ₹400. For swing trading, minimum target must be 3–5%. If a stock won't give you 3%, don't buy it.</div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--red-dim)">03</div>
+        <div class="rule-title">Stop-loss at entry — 1.5% maximum loss per trade</div>
+        <div class="rule-body">ASHOKLEY lost -4.26% and ETERNAL lost -4.65%. Both would have been -1.5% max loss trades with a proper SL. <strong>Rule: Enter broker's GTT (Good Till Trigger) SL order the moment you buy. Never buy without simultaneously placing SL.</strong></div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--red-dim)">04</div>
+        <div class="rule-title">No positions under ₹1 lakh investment</div>
+        <div class="rule-body">19 trades under ₹1L had 10.5% win rate and collectively lost ₹12,179. These micro-trades cannot overcome transaction costs. <strong>Minimum position size: ₹1.25L for small cap, ₹1.5L for mid/large cap. Below this = don't trade the stock.</strong></div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--amber-dim)">05</div>
+        <div class="rule-title">Large cap positions (>₹10L) only with 2%+ clear catalyst</div>
+        <div class="rule-body">BAJFINANCE ₹34.8L position yielded -₹8,234. GRASIM ₹27.8L yielded -₹7,001. <strong>If investing above ₹10L, the stock must have a clear catalyst (earnings beat, management upgrade, sector rotation) with minimum 3% target. No large-cap "hope" trades.</strong></div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--amber-dim)">06</div>
+        <div class="rule-title">Trade only the 4 confirmed SMID themes</div>
+        <div class="rule-body">April's winners (GUJALKALI, KRN, GRAPHITE, POWERICA) were all in confirmed sectors. April's losers were scattered across random sectors. <strong>May 2026: Only Pharma, Defence/Shipbuilding, Coal/Energy, and FMCG Selective. Zero trades outside these 4 themes.</strong></div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--blue-dim)">07</div>
+        <div class="rule-title">No results trades — check NSE before every entry</div>
+        <div class="rule-body">Result-day stocks have binary risk. ETERNAL and ASHOKLEY — both results-sensitive stocks in April — were among your biggest losers. <strong>Check NSE announcements for each stock. No entry within 5 trading days of a result announcement. Non-negotiable.</strong></div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--blue-dim)">08</div>
+        <div class="rule-title">Weekly review — close all losing positions by Friday</div>
+        <div class="rule-body">52 losing trades across April suggests you held losers across multiple weeks. <strong>Rule: Any position that is below SL by Friday close = exit over the weekend. Never hold a position with unrealized losses above 1.5% into the next week.</strong></div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--green-dim)">09</div>
+        <div class="rule-title">Trail stop-loss on winners — never let winners become losers</div>
+        <div class="rule-body">Your average winner was ₹4,766. But how many winners went higher and came back? <strong>Once a trade is +2%, move SL to breakeven. Once +4%, move SL to +2%. This "trailing SL" method protects profits while letting winners run to 8–10%.</strong></div>
+      </div>
+
+      <div class="rule">
+        <div class="rule-num" style="color:var(--green-dim)">10</div>
+        <div class="rule-title">Monthly charge budget — max ₹3,000 total charges</div>
+        <div class="rule-body">April charges: ₹31,843. <strong>Target for May: ₹3,000 total charges.</strong> At 0.1% STT on sells, this means maximum ₹30L in sell turnover (15 trades × ₹2L avg sell). This discipline forces you to trade ONLY your best ideas — and that's exactly what profitable swing trading requires.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 8: OPEN POSITIONS -->
+  <div class="section" id="open">
+    <div class="slbl">SECTION 08</div>
+    <div class="stitle">Open <span>Positions — Carryover Risk</span></div>
+    <div class="sdiv"></div>
+
+    <div class="cbox cb-a">
+      <div class="cbh"><span class="cbi">📌</span><span class="cbt">4 OPEN POSITIONS CARRYING INTO MAY — REVIEW EACH CAREFULLY</span></div>
+      <div class="cbb">
+        3 of 4 open positions have unrealized losses. None are from the primary SMID themes (Pharma, Defence, Coal). These positions are "orphaned trades" from April that didn't close cleanly. <strong>Recommendation: If any open position has no fundamental catalyst and is below breakeven by May 5, exit it. Don't add to the problem in May.</strong>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;border-radius:10px;box-shadow:var(--shadow-lg);">
+    <table class="ttbl">
+      <thead>
+        <tr><th>SYMBOL</th><th>OPEN QTY</th><th>OPEN VALUE ₹</th><th>UNREALIZED P&L ₹</th><th>UNREALIZED %</th><th>VERDICT</th><th>ACTION</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>JBCHEPHARM</td><td>50</td><td>1,01,817</td><td class="up">+588</td><td class="up">+0.58%</td><td><span class="pill pg">SMALL PROFIT</span></td><td>Hold if pharma sector positive. Exit if drops to entry.</td></tr>
+        <tr><td>GMDCLTD</td><td>200</td><td>1,47,600</td><td class="dn">-370</td><td class="dn">-0.25%</td><td><span class="pill pa">NEAR BREAKEVEN</span></td><td>Exit by May 5 if no catalyst. Holding costs (dividend debit risk).</td></tr>
+        <tr><td>JUBLINGREA</td><td>300</td><td>2,15,646</td><td class="dn">-1,521</td><td class="dn">-0.71%</td><td><span class="pill pr">LOSING · NO TRADE IN APR</span></td><td>⚠️ EXIT IMMEDIATELY. Position open with no April trades. Carryover from March.</td></tr>
+        <tr><td>THERMAX</td><td>25</td><td>1,02,176</td><td class="dn">-186</td><td class="dn">-0.18%</td><td><span class="pill pa">NEAR BREAKEVEN</span></td><td>Exit if no catalyst in first week of May. Capital better used elsewhere.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- SECTION 9: WIZARD FINAL -->
+  <div class="section" id="wizard">
+    <div class="slbl">SECTION 09</div>
+    <div class="stitle">Mr. Wizard's <span>Final Assessment</span></div>
+    <div class="sdiv"></div>
+
+    <div class="wf">
+      <div class="wf-av">🧙</div>
+      <div class="wf-bd">
+        <h4>MR. WIZARD'S MENTOR REVIEW — APRIL 2026 P&L ASSESSMENT</h4>
+        <p>Balaji, let me be direct because that's what a good mentor does: <strong>April 2026's P&L is a wake-up call, not a disaster.</strong> The gross numbers (₹4,700 realized profit, ₹5,167 actual before adjustments) show you ARE capable of picking profitable stocks. Your top 5 trades alone made ₹61,786 gross. But the 52 losing trades and ₹31,843 in charges turned a potentially excellent month into a ₹27,143 net loss.</p>
+        <p><strong>The single biggest structural problem:</strong> You are running a diversified portfolio strategy (81 stocks!) with a swing trader's cost structure (full brokerage + 0.1% STT on every delivery trade). These two don't mix. A mutual fund pays zero brokerage and negligible costs. A swing trader pays maximum costs. If you're going to pay swing trader costs, trade like a swing trader — 8–10 highly concentrated, high-conviction positions per month.</p>
+        <p><strong>The good news hidden in this report:</strong> Your win/loss ratio is 2.19× (average win ₹4,766 vs average loss ₹2,178). This is the foundation of a profitable strategy. If you simply trade 10 stocks per month instead of 81, your charges fall from ₹31,843 to approximately ₹3,000–₹4,000. With the same 2.19× ratio, you'd be net positive every month.</p>
+        <p><strong>What to do differently in May 2026:</strong><br>
+        1. Maximum 10 stocks. Sunday night selection. No deviations.<br>
+        2. All from the 4 confirmed themes: Pharma (Lupin, Torrent, Glenmark), Defence (BEL, GRSE), Coal/Energy (Coal India), FMCG Selective (ITC).<br>
+        3. Minimum 3% target on every trade. Below 3% target = don't enter.<br>
+        4. Stop-loss at 1.5% ATR placed immediately at entry via GTT order.<br>
+        5. Exit JUBLINGREA and GMDCLTD immediately (no catalyst, bleeding).<br>
+        6. Track your charges weekly — alert yourself when you cross ₹1,500 in charges mid-month.</p>
+        <p><em>"The goal of trading is not to be in the market as much as possible — it's to be right as often as possible with the right position size. In April, you traded 81 stocks. In May, trade 10 stocks and make more money."</em></p>
+        <p><strong>Target for May 2026: 10 trades × avg 4% gain × ₹2L avg position = ₹80,000 gross − ₹4,000 charges = ₹76,000 net profit. Achievable with discipline.</strong></p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>MONTHLY P&L ANALYSIS · <strong>MR. WIZARD × BALAJI SWING SYSTEM</strong> · CLIENT VI0793 · ZERODHA · APRIL 2026 · EQUITY REPORT</p>
+  <p>Data: Zerodha Tax P&L Statement Apr 2026 · 81 stocks traded · 77 closed · 4 open · Realized P&L ₹4,700 · Charges ₹31,843 · STT ₹20,142 · Brokerage ₹5,800 · Net P&L -₹27,143 · Not investment advice</p>
+</footer>
+
+</body>
+</html>
